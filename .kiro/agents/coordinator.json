@@ -1,0 +1,25 @@
+{
+  "name": "coordinator",
+  "description": "Organization coordinator for Kaze no Manga - cross-device manga reading tracker",
+  "prompt": "file://../steering/prompt.md",
+  "tools": ["read", "write", "shell", "web_search", "web_fetch", "introspect", "thinking"],
+  "allowedTools": ["read", "shell", "web_search", "web_fetch", "introspect", "thinking"],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "profile/**",
+        "workflows/**",
+        "*.md",
+        ".kiro/**"
+      ]
+    },
+    "shell": {
+      "autoAllowReadonly": true
+    }
+  },
+  "resources": [
+    "file://README.md",
+    "file://.kiro/specs/**/*.md",
+    "file://.kiro/steering/**/*.md"
+  ]
+}

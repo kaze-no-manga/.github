@@ -6,14 +6,14 @@ This task list coordinates development across all repositories for the Kaze no M
 
 ### 1. Brand Package
 
-- [ ] 1.1 Create brand repository and NPM package structure
+- [x] 1.1 Create brand repository and NPM package structure
   - Initialize repository with TypeScript, Vitest, Biome
   - Configure package.json for NPM publishing
   - Setup GitHub Actions for automated publishing
   - _Requirements: 1.1, 5.1, 5.2_
   - _Details: See `brand/.kiro/specs/01-mvp/`_
 
-- [ ] 1.2 Define design tokens
+- [x] 1.2 Define design tokens
   - Create color palette (purple/lilac theme)
   - Define typography scale
   - Define spacing, border-radius, shadows
@@ -21,19 +21,19 @@ This task list coordinates development across all repositories for the Kaze no M
   - _Requirements: 1.1_
   - _Details: See `brand/.kiro/specs/01-mvp/`_
 
-- [ ] 1.3 Create Tailwind CSS preset
+- [x] 1.3 Create Tailwind CSS preset
   - Extend Tailwind with design tokens
   - Configure theme, colors, typography
   - Test preset in sample project
   - _Requirements: 1.1_
   - _Details: See `brand/.kiro/specs/01-mvp/`_
 
-- [ ]* 1.4 Write tests for brand package
+- [x]* 1.4 Write tests for brand package
   - Unit tests for token exports
   - Property tests for Tailwind preset
   - _Requirements: 5.3, 5.4_
 
-- [ ] 1.5 Publish brand package to NPM
+- [x] 1.5 Publish brand package to NPM
   - Version 0.1.0
   - Verify package is accessible
   - Create GitHub release

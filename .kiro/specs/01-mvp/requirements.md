@@ -24,7 +24,7 @@ This is a **meta-spec** that orchestrates repository-specific specs. Each reposi
 #### Acceptance Criteria
 
 1. WHEN the brand package is published THEN the system SHALL provide design tokens, color palette, typography scale, and Tailwind preset
-2. WHEN the models package is published THEN the system SHALL provide TypeScript interfaces, Zod schemas, and GraphQL SDL for all core entities
+2. WHEN the models package is published THEN the system SHALL provide TypeScript interfaces generated from GraphQL and GraphQL SDL for all core entities
 3. WHEN the database package is created THEN the system SHALL provide Drizzle schema definitions and migration files for all core tables
 4. WHEN a package is published THEN the system SHALL be available on NPM as `@kaze-no-manga/{package-name}` with version `0.1.0` or higher
 5. WHEN a package is published THEN the system SHALL include comprehensive README, TypeScript types, and pass all tests

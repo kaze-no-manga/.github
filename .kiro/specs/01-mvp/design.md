@@ -97,25 +97,31 @@ export const tailwindPreset = { ... }
 
 **Exports:**
 ```typescript
-// TypeScript interfaces
+// GraphQL generated TypeScript types
 export interface Manga {
   id: string
-  title: string
   slug: string
-  // ...
+  title: string
+  altTitles: string[]
+  description?: string
+  cover?: string
+  status: MangaStatus
+  genres: string[]
+  authors: string[]
+  year?: number
+  totalChapters?: number
+  isNsfw: boolean
+  sourceName: string
+  sourceId: string
+  createdAt: string
+  updatedAt: string
 }
-
-// Zod schemas
-export const MangaSchema = z.object({
-  id: z.string().uuid(),
-  title: z.string().min(1),
-  // ...
-})
 
 // GraphQL SDL
 export const graphqlSchema = `
   type Manga {
     id: ID!
+    slug: String!
     title: String!
     # ...
   }
@@ -123,13 +129,13 @@ export const graphqlSchema = `
 ```
 
 **Deliverables:**
-- TypeScript interfaces for all entities (Manga, Chapter, User, Library, etc.)
-- Zod schemas for validation
-- GraphQL SDL files
+- GraphQL SDL files for all domains (User, Content, Library)
+- TypeScript interfaces generated from GraphQL via Codegen
+- Complete CRUD operations (queries and mutations)
 - GraphQL Codegen configuration
-- Published to NPM as `@kaze-no-manga/models@0.1.0`
+- Published to NPM as `@kaze-no-manga/models@1.0.0`
 
-**Dependencies:** `@kaze-no-manga/brand` (for design tokens in types)
+**Dependencies:** None (GraphQL-first approach)
 
 **Spec Location:** `models/.kiro/specs/01-mvp/`
 
@@ -297,74 +303,78 @@ Defined in `@kaze-no-manga/models` and implemented in `database`:
 ```typescript
 // User
 interface User {
-  id: string              // Cognito sub
+  id: string              // UUID
   email: string
   name: string | null
-  createdAt: Date
-  updatedAt: Date
+  avatar: string | null
+  preferences: UserPreferences
+  createdAt: string
+  updatedAt: string
 }
 
 // Manga
 interface Manga {
   id: string
+  slug: string            // SEO-friendly URL slug
   title: string
-  slug: string
   altTitles: string[]
-  author: string | null
-  year: number | null
-  status: 'ongoing' | 'completed' | 'hiatus'
-  coverUrl: string | null
   description: string | null
+  cover: string | null    // Cover image URL
+  status: 'ONGOING' | 'COMPLETED' | 'HIATUS' | 'CANCELLED'
   genres: string[]
-  sources: MangaSource[]
-  createdAt: Date
-  updatedAt: Date
-}
-
-// MangaSource
-interface MangaSource {
-  id: string
-  mangaId: string
+  authors: string[]
+  year: number | null
+  totalChapters: number | null
+  isNsfw: boolean
   sourceName: string      // 'mangapark', 'omegascans'
   sourceId: string        // ID in external source
-  url: string
-  priority: number        // For source selection
-  lastChecked: Date | null
+  createdAt: string
+  updatedAt: string
 }
 
 // Chapter
 interface Chapter {
   id: string
   mangaId: string
-  sourceId: string
   number: number          // Supports decimals: 5.1, 5.5
   title: string | null
-  url: string
-  publishedAt: Date | null
-  createdAt: Date
+  releaseDate: string | null
+  images: ChapterImage[]
+  createdAt: string
+  updatedAt: string
 }
 
-// UserLibrary
-interface UserLibrary {
-  id: string
+// ChapterImage
+interface ChapterImage {
+  url: string             // S3 URL (optimized)
+  originalUrl: string     // Original source URL
+  page: number
+  width: number | null
+  height: number | null
+}
+
+// UserLibrary (LibraryEntry)
+interface LibraryEntry {
   userId: string
   mangaId: string
-  status: 'reading' | 'completed' | 'plan_to_read' | 'dropped' | null
+  status: 'READING' | 'COMPLETED' | 'PLAN_TO_READ' | 'DROPPED' | 'ON_HOLD' | null
   rating: number | null   // 1-10
   notes: string | null
   currentChapterId: string | null
-  addedAt: Date
-  updatedAt: Date
+  lastReadAt: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 // ReadingHistory
 interface ReadingHistory {
   id: string
   userId: string
-  chapterId: string
   mangaId: string
+  chapterId: string
+  chapterNumber: number
   completed: boolean
-  readAt: Date
+  readAt: string
 }
 ```
 

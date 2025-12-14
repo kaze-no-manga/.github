@@ -8,6 +8,10 @@ on:
         required: false
         type: string
         default: '.'
+      AWS_DEFAULT_REGION:
+        required: false
+        type: string
+        default: 'eu-central-1'
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -34,3 +38,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ inputs.AWS_DEFAULT_REGION }}

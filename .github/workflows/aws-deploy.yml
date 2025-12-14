@@ -2,6 +2,12 @@ name: AWS Deploy
 
 on:
   workflow_call:
+    inputs:
+      working-directory:
+        description: 'Working directory for CDK commands'
+        required: false
+        type: string
+        default: '.'
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -11,6 +17,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - uses: actions/checkout@v6
       
@@ -21,7 +30,7 @@ jobs:
       
       - run: npm ci
       
-      - run: npx cdk deploy --all --require-approval never
+      - run: npm run deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
